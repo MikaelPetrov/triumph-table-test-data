@@ -1,0 +1,16 @@
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  min-width: calc(320px / 3);
+}
+
+th,
+td {
+  padding: 10px;
+  width: 200px;
+  color: black;
+  border-bottom: 2px solid #1f7d63;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

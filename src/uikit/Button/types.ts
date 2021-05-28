@@ -1,0 +1,24 @@
+export type StyleProps = {
+  children?: string;
+  height?: string;
+  width?: string;
+  maxWidth?: string;
+  margin?: string;
+  padding?: string;
+  borderRadius?: string;
+  color?: string;
+  colorModifier?: string;
+  boxShadowModifier?: string;
+  backgroundColor?: string;
+  backgroundColorModifier?: string;
+  textDecoration?: string;
+  fontWeight?: string;
+  hasIcon?: boolean;
+  iconWidth?: string;
+  iconHeight?: string;
+  iconMargin?: string;
+  iconFill?: string;
+  isRowReversed?: boolean;
+  type?: string;
+  fontSize?: string;
+};
