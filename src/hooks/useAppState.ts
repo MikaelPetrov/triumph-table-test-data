@@ -5,20 +5,21 @@ import {
   MODE_VIEW,
 } from "../components/Table/constants";
 import { TypeMode, TypeObjectData } from "../types/types";
-import { getStorage, setStorage } from "../utils/helpers";
+import { getLocalStorage, setLocalStorage } from "../utils/helpers";
+import { TypeUseAppState } from "./types";
 
-const initMode = {
+export const initMode = {
   type: "",
   name: "",
 };
 
-const initObjectData = {
+export const initObjectData = {
   name: "",
   type: "",
   color: "",
 };
 
-export function useGetTableData() {
+export function useAppState(): TypeUseAppState {
   const [mode, setMode] = useState<TypeMode>(initMode);
   const [tempData, setTempData] = useState<TypeObjectData>(initObjectData);
   const [objectData, setObjectData] = useState<TypeObjectData>(initObjectData);
@@ -27,12 +28,12 @@ export function useGetTableData() {
   const [modalVisibility, setModalVisibility] = useState(false);
 
   useEffect(() => {
-    const storageData = getStorage();
-    setTableData(storageData);
+    const localStorageData = getLocalStorage();
+    setTableData(localStorageData);
   }, []);
 
   useEffect(() => {
-    setStorage(tableData);
+    setLocalStorage(tableData);
   }, [tableData]);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ export function useGetTableData() {
         prevState.concat(objectData)
       );
     }
+    setModalVisibility(false);
   }, [objectData]);
 
   useEffect(() => {
@@ -59,13 +61,16 @@ export function useGetTableData() {
 
   const infoMode = () => {
     setModalVisibility(true);
+
     const viewData = tableData.filter((value) => value.name === mode.name);
     setTableInfo(viewData);
   };
 
   const editMode = () => {
     setModalVisibility(true);
-    const editRow = tableData.filter((value) => value.name === mode.name);
+
+    const editRow = tableData.find((value) => value.name === mode.name);
+    if (editRow) setTempData(editRow);
   };
 
   const deleteMode = () => {
@@ -77,12 +82,13 @@ export function useGetTableData() {
   return {
     mode,
     tempData,
-    modalVisibility,
     tableData,
     tableInfo,
+    modalVisibility,
     setMode,
     setTempData,
     setObjectData,
+    setTableData,
     setModalVisibility,
   };
 }

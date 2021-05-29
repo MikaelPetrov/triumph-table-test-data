@@ -5,7 +5,8 @@ import Form from "./components/Form";
 import Modal from "./components/Modal";
 import Table from "./components/Table";
 import { MODE_EDIT, MODE_VIEW } from "./components/Table/constants";
-import { useGetTableData } from "./hooks/useGetTableData";
+import { initMode, useAppState } from "./hooks/useAppState";
+import { useColorPicker } from "./hooks/useColorPicker";
 import { FormMethod } from "./types/types";
 import Button from "./uikit/Button";
 
@@ -18,13 +19,16 @@ const App = () => {
     modalVisibility,
     setMode,
     setTempData,
+    setTableData,
     setObjectData,
     setModalVisibility,
-  } = useGetTableData();
+  } = useAppState();
 
-  const changeModalVisibility = (value: boolean) => {
-    setModalVisibility(value);
-    setMode({ type: "", name: "" });
+  const { color, isPicker, setColor, setIsPicker } = useColorPicker();
+
+  const openModalWindow = () => {
+    setModalVisibility(true);
+    setMode(initMode);
   };
 
   const getModalTitle = () => {
@@ -39,20 +43,26 @@ const App = () => {
 
   return (
     <div className="App">
-      <Table
-        tableData={tableData}
-        setMode={setMode}
-        onOpen={setModalVisibility}
-      />
+      <Table tableData={tableData} setMode={setMode} />
       {modalVisibility && (
-        <Modal title={getModalTitle()} onClose={setModalVisibility}>
+        <Modal
+          title={getModalTitle()}
+          setTempData={setTempData}
+          closeModal={setModalVisibility}
+        >
           <Form
             mode={mode}
             tempData={tempData}
             tableData={tableData}
             tableInfo={tableInfo}
+            color={color}
+            isPicker={isPicker}
             setTempData={setTempData}
+            setTableData={setTableData}
             setObjectData={setObjectData}
+            closeModal={setModalVisibility}
+            setColor={setColor}
+            setIsPicker={setIsPicker}
             method={
               mode.type === MODE_EDIT ? FormMethod.UPDATE : FormMethod.CREATE
             }
@@ -61,7 +71,7 @@ const App = () => {
       )}
       <Button
         margin="0 auto"
-        onClick={() => changeModalVisibility(true)}
+        onClick={() => openModalWindow()}
         backgroundColor={colors.eucalyptus}
         backgroundColorModifier={colors.jungleGreen}
       >

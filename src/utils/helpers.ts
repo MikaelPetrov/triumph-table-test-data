@@ -7,11 +7,11 @@ export function toFilterName(name: string, tableData: TypeObjectData[]) {
   return filteredName;
 }
 
-export const setStorage = (storage: TypeObjectData[]): void => {
+export const setLocalStorage = (storage: TypeObjectData[]): void => {
   localStorage.setItem("storage", JSON.stringify(storage));
 };
 
-export const getStorage = () =>
+export const getLocalStorage = () =>
   localStorage.getItem("storage")
     ? JSON.parse(localStorage.getItem("storage")!)
     : [];
