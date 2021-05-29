@@ -3,6 +3,10 @@ import { ChangeEvent } from "react";
 export type TypeChange = ChangeEvent<HTMLInputElement>;
 export type TypeSubmit = React.FormEvent<HTMLFormElement>;
 
+export type TypeColor = {
+  background: string;
+};
+
 export type TypeMode = {
   type: string;
   name: string;
@@ -15,6 +19,6 @@ export type TypeObjectData = {
 };
 
 export enum FormMethod {
-  UPDATE = "update",
-  CREATE = "create",
+  UPDATE = "UPDATE",
+  CREATE = "CREATE",
 }

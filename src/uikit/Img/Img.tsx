@@ -10,6 +10,9 @@ function Img(props: Props & StyleProps): JSX.Element {
   const imgStyleProps = {
     onClick: props.onClick,
     src: props.src,
+    position: props.position,
+    left: props.left,
+    bottom: props.bottom,
     height: props.height,
     width: props.width,
     margin: props.margin,
@@ -19,11 +22,7 @@ function Img(props: Props & StyleProps): JSX.Element {
   };
 
   return (
-    <StyledImage
-      alt="action-icon"
-      data-name="styled-image"
-      {...imgStyleProps}
-    />
+    <StyledImage alt="image-icon" data-name="styled-image" {...imgStyleProps} />
   );
 }
 

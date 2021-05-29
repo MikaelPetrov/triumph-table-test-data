@@ -12,16 +12,18 @@ export const FormField = styled.div`
   align-items: center;
   width: 100%;
   margin: 20px 0;
+`;
 
-  &:last-child {
-    margin-bottom: 40px;
-    ${({ name }) => `margin-bottom: ${!name ? "100px" : "0"}`};
-  }
+export const FormPicker = styled.div`
+  position: absolute;
+  left: 50px;
+  top: 290px;
+  opacity: 0.8;
 `;
 
 export const FormInput = styled.input`
   width: 70%;
-  padding: 10px;
+  padding: 8px;
   outline: none;
   color: ${colors.gray20};
   background: ${colors.white};
@@ -42,7 +44,7 @@ export const FormInput = styled.input`
 
 export const FormButton = {
   height: "40px",
-  margin: "0 auto 40px",
+  margin: "0 auto",
   padding: "0 16px",
   boxShadow: "none",
   backgroundColor: colors.eucalyptus,
@@ -51,7 +53,13 @@ export const FormButton = {
 
 export const FormError = styled.div`
   height: 40px;
-  margin: 0 auto 40px;
+  margin: 0 auto;
   padding: 0 16px;
   color: ${colors.red};
 `;
+
+export const iconPicker = {
+  position: "relative",
+  left: "104px",
+  bottom: "24px",
+};
