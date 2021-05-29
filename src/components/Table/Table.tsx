@@ -1,7 +1,15 @@
 import { memo } from "react";
+import Img from "../../uikit/Img/Img";
 import { TypeObjectData } from "../Form/types";
-import { tableHeader } from "./constants";
+import {
+  ICON_DELETE,
+  ICON_EDIT,
+  ICON_VIEW,
+  tableHeader,
+  tableIcons,
+} from "./constants";
 import "./Table.module.css";
+import styles from "./Table.module.css";
 
 type Props = {
   tableData: TypeObjectData[];
@@ -12,8 +20,26 @@ type Props = {
 };
 
 const Table: React.FC<Props> = (props) => {
+  const setMode = (type: string, name: string) => {
+    switch (type) {
+      case ICON_VIEW:
+        return () => setInfoMode(name);
+      case ICON_EDIT:
+        return () => setChangeMode(name);
+      case ICON_DELETE:
+        return () => props.setNameToDelete(name);
+      default:
+        break;
+    }
+  };
+
   const setInfoMode = (name: string) => {
     props.setNameToView(name);
+    props.onOpen(true);
+  };
+
+  const setChangeMode = (name: string) => {
+    props.setNameToChange(name);
     props.onOpen(true);
   };
 
@@ -31,14 +57,18 @@ const Table: React.FC<Props> = (props) => {
         </thead>
         <tbody>
           {props.tableData.map((item) => (
-            <tr key={item?.name}>
+            <tr key={item?.name} className={styles.row}>
               <td>{item?.name}</td>
               <td>{item?.type}</td>
               <td>{item?.color}</td>
               <td>
-                <span onClick={() => setInfoMode(item.name)}>sh</span>
-                <span onClick={() => props.setNameToChange(item.name)}>ed</span>
-                <span onClick={() => props.setNameToDelete(item.name)}>de</span>
+                {tableIcons.map((icon) => (
+                  <Img
+                    key={icon.id}
+                    src={icon.icon}
+                    onClick={setMode(icon.type, item.name)}
+                  />
+                ))}
               </td>
             </tr>
           ))}

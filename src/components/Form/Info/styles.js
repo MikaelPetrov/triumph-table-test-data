@@ -5,6 +5,10 @@ export const InfoItem = styled.div`
   justify-content: center;
   align-items: baseline;
   margin: 20px 0;
+
+  &:first-child {
+    margin-top: 50px;
+  }
 `;
 
 export const InfoContent = styled.div`

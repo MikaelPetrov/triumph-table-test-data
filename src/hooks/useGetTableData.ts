@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TypeObjectData } from "../components/Form/types";
+import { getJwtPair, setJwtPair } from "../utils/helpers";
 
 export function useGetTableData() {
   const [name, setName] = useState<string>("");
@@ -14,17 +15,33 @@ export function useGetTableData() {
   const [tableInfo, setTableInfo] = useState<TypeObjectData[]>([]);
 
   useEffect(() => {
-    if (objectData) {
+    const jwtData = getJwtPair();
+    setTableData(jwtData);
+  }, []);
+
+  useEffect(() => {
+    setJwtPair(tableData);
+  }, [tableData]);
+
+  useEffect(() => {
+    if (objectData && !nameToChange) {
       setTableData((prevState: TypeObjectData[]) =>
         prevState.concat(objectData!)
       );
     }
+    // eslint-disable-next-line
   }, [objectData]);
 
   useEffect(() => {
-    const data = tableData.filter((value) => value.name === nameToView);
-    setTableInfo(data);
+    const viewData = tableData.filter((value) => value.name === nameToView);
+    setTableInfo(viewData);
   }, [nameToView, tableData]);
+
+  useEffect(() => {
+    const objectIndex = tableData.findIndex(
+      (value) => value.name === nameToChange
+    );
+  }, [nameToChange, tableData]);
 
   useEffect(() => {
     setTableData((prevState: TypeObjectData[]) =>

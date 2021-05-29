@@ -36,10 +36,10 @@ const App = () => {
 
   const changeModalTitle = () => {
     if (nameToView) {
-      return nameToView;
+      return "View: " + nameToView;
     }
     if (nameToChange) {
-      return nameToChange;
+      return "Edit: " + nameToChange;
     }
     return "Row creation";
   };
@@ -60,6 +60,7 @@ const App = () => {
             type={type}
             color={color}
             nameToView={nameToView}
+            nameToChange={nameToChange}
             tableData={tableData}
             tableInfo={tableInfo}
             setName={setName}
