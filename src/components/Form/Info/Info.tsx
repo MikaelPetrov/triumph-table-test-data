@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { TypeObjectData } from "../types";
+import { TypeObjectData } from "../../../types/types";
 import { GROUP_COLOR, GROUP_NAME, GROUP_TYPE, infoItems } from "./constants";
 import { InfoContent, InfoHeader, InfoItem } from "./styles";
 

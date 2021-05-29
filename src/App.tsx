@@ -2,44 +2,37 @@ import React, { memo } from "react";
 import "./App.css";
 import { colors } from "./common/colors";
 import Form from "./components/Form";
-import { FormMethod } from "./components/Form/types";
 import Modal from "./components/Modal";
 import Table from "./components/Table";
+import { MODE_EDIT, MODE_VIEW } from "./components/Table/constants";
 import { useGetTableData } from "./hooks/useGetTableData";
+import { FormMethod } from "./types/types";
 import Button from "./uikit/Button";
 
 const App = () => {
   const {
-    name,
-    type,
-    color,
-    nameToView,
-    nameToChange,
-    modalVisibility,
+    mode,
+    tempData,
     tableData,
     tableInfo,
-    setName,
-    setType,
-    setColor,
+    modalVisibility,
+    setMode,
+    setTempData,
     setObjectData,
-    setNameToView,
-    setNameToChange,
-    setNameToDelete,
     setModalVisibility,
   } = useGetTableData();
 
   const changeModalVisibility = (value: boolean) => {
     setModalVisibility(value);
-    setNameToView("");
-    setNameToChange("");
+    setMode({ type: "", name: "" });
   };
 
-  const changeModalTitle = () => {
-    if (nameToView) {
-      return "View: " + nameToView;
+  const getModalTitle = () => {
+    if (mode.type === MODE_VIEW) {
+      return "View: " + mode.name;
     }
-    if (nameToChange) {
-      return "Edit: " + nameToChange;
+    if (mode.type === MODE_EDIT) {
+      return "Edit: " + mode.name;
     }
     return "Row creation";
   };
@@ -48,26 +41,21 @@ const App = () => {
     <div className="App">
       <Table
         tableData={tableData}
-        setNameToView={setNameToView}
-        setNameToChange={setNameToChange}
-        setNameToDelete={setNameToDelete}
+        setMode={setMode}
         onOpen={setModalVisibility}
       />
       {modalVisibility && (
-        <Modal title={changeModalTitle()} onClose={setModalVisibility}>
+        <Modal title={getModalTitle()} onClose={setModalVisibility}>
           <Form
-            name={name}
-            type={type}
-            color={color}
-            nameToView={nameToView}
-            nameToChange={nameToChange}
+            mode={mode}
+            tempData={tempData}
             tableData={tableData}
             tableInfo={tableInfo}
-            setName={setName}
-            setType={setType}
-            setColor={setColor}
+            setTempData={setTempData}
             setObjectData={setObjectData}
-            method={FormMethod.CREATE}
+            method={
+              mode.type === MODE_EDIT ? FormMethod.UPDATE : FormMethod.CREATE
+            }
           />
         </Modal>
       )}

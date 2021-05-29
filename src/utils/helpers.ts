@@ -1,12 +1,4 @@
-import { TypeObjectData } from "./../components/Form/types";
-
-export function toObjectData(name: string, type: string, color: string) {
-  return {
-    name: name,
-    type: type,
-    color: color,
-  };
-}
+import { TypeObjectData } from "../types/types";
 
 export function toFilterName(name: string, tableData: TypeObjectData[]) {
   const filteredName = tableData.filter(
@@ -15,11 +7,11 @@ export function toFilterName(name: string, tableData: TypeObjectData[]) {
   return filteredName;
 }
 
-export const setJwtPair = (jwtPair: TypeObjectData[]): void => {
-  localStorage.setItem("jwtPair", JSON.stringify(jwtPair));
+export const setStorage = (storage: TypeObjectData[]): void => {
+  localStorage.setItem("storage", JSON.stringify(storage));
 };
 
-export const getJwtPair = () =>
-  localStorage.getItem("jwtPair")
-    ? JSON.parse(localStorage.getItem("jwtPair")!)
+export const getStorage = () =>
+  localStorage.getItem("storage")
+    ? JSON.parse(localStorage.getItem("storage")!)
     : [];

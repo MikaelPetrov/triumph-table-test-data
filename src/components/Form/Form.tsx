@@ -1,6 +1,14 @@
 import React, { memo } from "react";
+import {
+  FormMethod,
+  TypeChange,
+  TypeMode,
+  TypeObjectData,
+  TypeSubmit,
+} from "../../types/types";
 import Button from "../../uikit/Button";
-import { toFilterName, toObjectData } from "../../utils/helpers";
+import { toFilterName } from "../../utils/helpers";
+import { MODE_VIEW } from "../Table/constants";
 import { COLOR, formElements, NAME, TYPE } from "./constants";
 import Info from "./Info";
 import {
@@ -10,20 +18,14 @@ import {
   FormInput,
   FormWrapper,
 } from "./styles";
-import { FormMethod, TypeChange, TypeObjectData, TypeSubmit } from "./types";
 
 type Props = {
-  name: string;
-  type: string;
-  color: string;
-  nameToView: string;
-  nameToChange: string;
+  mode: TypeMode;
   method: FormMethod;
+  tempData: TypeObjectData;
   tableData: TypeObjectData[];
   tableInfo: TypeObjectData[];
-  setName: (name: string) => void;
-  setType: (type: string) => void;
-  setColor: (color: string) => void;
+  setTempData: (tempData: TypeObjectData) => void;
   setObjectData: (objectData: TypeObjectData) => void;
 };
 
@@ -31,11 +33,11 @@ const Form: React.FC<Props> = (props) => {
   const inputValue = (type: string) => {
     switch (type) {
       case NAME:
-        return props.name;
+        return props.tempData.name;
       case TYPE:
-        return props.type;
+        return props.tempData.type;
       case COLOR:
-        return props.color;
+        return props.tempData.color;
       default:
         break;
     }
@@ -44,11 +46,26 @@ const Form: React.FC<Props> = (props) => {
   const handleChange = (type: string) => {
     switch (type) {
       case NAME:
-        return (event: TypeChange) => props.setName(event.currentTarget.value);
+        return (event: TypeChange) =>
+          props.setTempData({
+            name: event.currentTarget.value,
+            type: props.tempData.type,
+            color: props.tempData.color,
+          });
       case TYPE:
-        return (event: TypeChange) => props.setType(event.currentTarget.value);
+        return (event: TypeChange) =>
+          props.setTempData({
+            name: props.tempData.name,
+            type: event.currentTarget.value,
+            color: props.tempData.color,
+          });
       case COLOR:
-        return (event: TypeChange) => props.setColor(event.currentTarget.value);
+        return (event: TypeChange) =>
+          props.setTempData({
+            name: props.tempData.name,
+            type: props.tempData.type,
+            color: event.currentTarget.value,
+          });
       default:
         break;
     }
@@ -56,20 +73,32 @@ const Form: React.FC<Props> = (props) => {
 
   const handleSubmit = (event: TypeSubmit) => {
     event.preventDefault();
-    props.setObjectData(toObjectData(props.name, props.type, props.color));
-    props.setName("");
-    props.setType("");
-    props.setColor("");
+    if (props.method === FormMethod.CREATE) {
+      props.setObjectData({
+        name: props.tempData.name,
+        type: props.tempData.type,
+        color: props.tempData.color,
+      });
+    }
+    props.setTempData({
+      name: "",
+      type: "",
+      color: "",
+    });
   };
 
   return (
     <FormWrapper onSubmit={handleSubmit} data-name="form-wrapper">
-      {props.nameToView ? (
+      {props.mode.type === MODE_VIEW ? (
         <Info tableInfo={props.tableInfo} />
       ) : (
         <>
           {formElements.map((input) => (
-            <FormField name={props.name} key={input.id} data-name="form-field">
+            <FormField
+              key={input.id}
+              name={props.tempData.name}
+              data-name="form-field"
+            >
               <label htmlFor={input.id}>{input.label}</label>
               <FormInput
                 id={input.id}
@@ -81,9 +110,10 @@ const Form: React.FC<Props> = (props) => {
               />
             </FormField>
           ))}
-          {props.name &&
-            (props.name !== toFilterName(props.name, props.tableData) ||
-            props.nameToChange ? (
+          {props.tempData.name &&
+            (props.tempData.name !==
+              toFilterName(props.tempData.name, props.tableData) ||
+            props.mode.type === MODE_VIEW ? (
               <Button {...FormButton}>Submit</Button>
             ) : (
               <FormError>Name already entered!</FormError>
