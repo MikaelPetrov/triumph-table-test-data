@@ -17,6 +17,7 @@ type Props = {
   type: string;
   color: string;
   nameToView: string;
+  nameToChange: string;
   method: FormMethod;
   tableData: TypeObjectData[];
   tableInfo: TypeObjectData[];
@@ -81,7 +82,8 @@ const Form: React.FC<Props> = (props) => {
             </FormField>
           ))}
           {props.name &&
-            (props.name !== toFilterName(props.name, props.tableData) ? (
+            (props.name !== toFilterName(props.name, props.tableData) ||
+            props.nameToChange ? (
               <Button {...FormButton}>Submit</Button>
             ) : (
               <FormError>Name already entered!</FormError>

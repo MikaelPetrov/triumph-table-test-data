@@ -14,3 +14,12 @@ export function toFilterName(name: string, tableData: TypeObjectData[]) {
   )[0]?.name;
   return filteredName;
 }
+
+export const setJwtPair = (jwtPair: TypeObjectData[]): void => {
+  localStorage.setItem("jwtPair", JSON.stringify(jwtPair));
+};
+
+export const getJwtPair = () =>
+  localStorage.getItem("jwtPair")
+    ? JSON.parse(localStorage.getItem("jwtPair")!)
+    : [];
