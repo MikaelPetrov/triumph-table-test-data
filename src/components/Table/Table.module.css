@@ -9,11 +9,11 @@ td {
   width: 200px;
   padding: 0.75rem;
   line-height: 1;
-  color: black;
-  border-bottom: 2px solid #1f7d63;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: black;
+  border-bottom: 2px solid #1f7d63;
 }
 
 th:last-child,
@@ -23,5 +23,4 @@ td:last-child {
 
 .row:hover {
   background: #f7f7f7;
-  cursor: pointer;
 }

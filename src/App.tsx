@@ -13,18 +13,16 @@ import Button from "./uikit/Button";
 const App = () => {
   const {
     mode,
-    tempData,
+    objectData,
     tableData,
-    tableInfo,
     modalVisibility,
     setMode,
-    setTempData,
-    setTableData,
     setObjectData,
+    setTableData,
     setModalVisibility,
   } = useAppState();
 
-  const { color, isPicker, setColor, setIsPicker } = useColorPicker();
+  const { color, isPicked, setColor, setIsPicked } = useColorPicker();
 
   const openModalWindow = () => {
     setModalVisibility(true);
@@ -47,22 +45,21 @@ const App = () => {
       {modalVisibility && (
         <Modal
           title={getModalTitle()}
-          setTempData={setTempData}
+          setObjectData={setObjectData}
           closeModal={setModalVisibility}
+          setIsPicked={setIsPicked}
         >
           <Form
             mode={mode}
-            tempData={tempData}
+            objectData={objectData}
             tableData={tableData}
-            tableInfo={tableInfo}
             color={color}
-            isPicker={isPicker}
-            setTempData={setTempData}
-            setTableData={setTableData}
+            isPicked={isPicked}
             setObjectData={setObjectData}
+            setTableData={setTableData}
             closeModal={setModalVisibility}
             setColor={setColor}
-            setIsPicker={setIsPicker}
+            setIsPicked={setIsPicked}
             method={
               mode.type === MODE_EDIT ? FormMethod.UPDATE : FormMethod.CREATE
             }

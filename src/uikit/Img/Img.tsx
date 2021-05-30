@@ -13,12 +13,6 @@ function Img(props: Props & StyleProps): JSX.Element {
     position: props.position,
     left: props.left,
     bottom: props.bottom,
-    height: props.height,
-    width: props.width,
-    margin: props.margin,
-    padding: props.padding,
-    color: props.color,
-    colorModifier: props.colorModifier,
   };
 
   return (

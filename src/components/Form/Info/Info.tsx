@@ -1,21 +1,27 @@
 import { memo } from "react";
 import { TypeObjectData } from "../../../types/types";
+import Indicator from "../../../uikit/Indicator";
 import { GROUP_COLOR, GROUP_NAME, GROUP_TYPE, infoItems } from "./constants";
-import { InfoContent, InfoHeader, InfoItem } from "./styles";
+import { InfoHeader, InfoItem } from "./styles";
 
 type Props = {
-  tableInfo: TypeObjectData[];
+  objectData: TypeObjectData;
 };
 
 const Info: React.FC<Props> = (props) => {
-  const getInfoItem = (type: string, info: TypeObjectData) => {
-    switch (type) {
+  const getInfoItem = (group: string, info: TypeObjectData) => {
+    switch (group) {
       case GROUP_NAME:
-        return <div>{info.name}</div>;
+        return <>{info.name}</>;
       case GROUP_TYPE:
-        return <div>{info.type}</div>;
+        return <>{info.type}</>;
       case GROUP_COLOR:
-        return <div>{info.color}</div>;
+        return (
+          <>
+            {info.color}
+            <Indicator backgroundColor={info.color} />
+          </>
+        );
       default:
         break;
     }
@@ -23,15 +29,11 @@ const Info: React.FC<Props> = (props) => {
 
   return (
     <>
-      {props.tableInfo.map((info) => (
-        <InfoContent key={info.name} data-name="info-content">
-          {infoItems.map((item) => (
-            <InfoItem key={item.id} data-name="info-item">
-              <InfoHeader>{item.name}</InfoHeader>
-              {getInfoItem(item.group, info)}
-            </InfoItem>
-          ))}
-        </InfoContent>
+      {infoItems.map((item) => (
+        <InfoItem key={item.id} data-name="info-item">
+          <InfoHeader data-name="info-header">{item.name}</InfoHeader>
+          {getInfoItem(item.group, props.objectData)}
+        </InfoItem>
       ))}
     </>
   );

@@ -8,12 +8,12 @@ export const initColor = {
 
 export function useColorPicker(): TypeColorPicker {
   const [color, setColor] = useState<TypeColor>(initColor);
-  const [isPicker, setIsPicker] = useState(false);
+  const [isPicked, setIsPicked] = useState(false);
 
   return {
     color,
-    isPicker,
+    isPicked,
     setColor,
-    setIsPicker,
+    setIsPicked,
   };
 }
