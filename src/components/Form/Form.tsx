@@ -135,7 +135,7 @@ const Form: React.FC<Props> = (props) => {
               />
               {input.name === COLOR && (
                 <Img
-                  onClick={() => handlePicker()}
+                  onClick={handlePicker}
                   src={iconColorPicker}
                   {...iconPicker}
                 />

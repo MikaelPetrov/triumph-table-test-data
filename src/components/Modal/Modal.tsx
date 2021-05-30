@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { initObjectData } from "../../hooks/useAppState";
-import { TypeObjectData } from "../../types/types";
+import { TypeClick, TypeObjectData } from "../../types/types";
 import { CloseButton, ModalContainer, ModalWindow } from "./styles";
 
 type Props = {
@@ -18,14 +18,21 @@ const Modal: React.FC<Props> = (props) => {
     props.setObjectData(initObjectData);
   };
 
+  const stopModalClosing = (event: TypeClick) => {
+    event.stopPropagation();
+  };
+
   return (
-    <ModalContainer data-name="modal-container">
-      <ModalWindow data-name="modal-window">
+    <ModalContainer
+      onDoubleClick={closeModalWindow}
+      data-name="modal-container"
+    >
+      <ModalWindow onDoubleClick={stopModalClosing} data-name="modal-window">
         <h3>{props.title}</h3>
-        <span onClick={() => closeModalWindow()}>
+        <span onClick={closeModalWindow}>
           <CloseButton data-name="close-button">X</CloseButton>
         </span>
-        <>{props.children}</>
+        {props.children}
       </ModalWindow>
     </ModalContainer>
   );
