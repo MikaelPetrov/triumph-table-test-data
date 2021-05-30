@@ -1,3 +1,4 @@
+import { DropResult } from "react-beautiful-dnd";
 import { TypeObjectData } from "../types/types";
 
 export function toFilterName(name: string, tableData: TypeObjectData[]) {
@@ -20,6 +21,13 @@ export function toEditElem(
   const currentState = [...prevState];
   currentState.splice(index, 1, objectData);
   return currentState;
+}
+
+export function toDragElem(result: DropResult, tableData: TypeObjectData[]) {
+  const items = Array.from(tableData);
+  const [reorderedItem] = items.splice(result.source.index, 1);
+  items.splice(result.destination!.index, 0, reorderedItem);
+  return items;
 }
 
 export const setLocalStorage = (storage: TypeObjectData[]): void => {
