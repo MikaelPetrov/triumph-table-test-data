@@ -41,7 +41,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <Table tableData={tableData} setMode={setMode} />
+      <Table
+        tableData={tableData}
+        setMode={setMode}
+        setTableData={setTableData}
+      />
       {modalVisibility && (
         <Modal
           title={getModalTitle()}
