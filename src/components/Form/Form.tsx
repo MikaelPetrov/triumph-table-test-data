@@ -12,7 +12,7 @@ import {
 } from "../../types/types";
 import Button from "../../uikit/Button";
 import Img from "../../uikit/Img";
-import { toFilterName } from "../../utils/helpers";
+import { toEditElem, toFilterName, toFindIndex } from "../../utils/helpers";
 import { MODE_VIEW } from "../Table/constants";
 import { COLOR, formElements, NAME, TYPE } from "./constants";
 import Info from "./Info";
@@ -29,28 +29,26 @@ import {
 type Props = {
   mode: TypeMode;
   method: FormMethod;
-  tempData: TypeObjectData;
+  objectData: TypeObjectData;
   tableData: TypeObjectData[];
-  tableInfo: TypeObjectData[];
   color: TypeColor;
-  isPicker: boolean;
+  isPicked: boolean;
   closeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setTempData: React.Dispatch<React.SetStateAction<TypeObjectData>>;
   setObjectData: React.Dispatch<React.SetStateAction<TypeObjectData>>;
   setTableData: React.Dispatch<React.SetStateAction<TypeObjectData[]>>;
   setColor: React.Dispatch<React.SetStateAction<TypeColor>>;
-  setIsPicker: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Form: React.FC<Props> = (props) => {
   const inputValue = (type: string) => {
     switch (type) {
       case NAME:
-        return props.tempData.name;
+        return props.objectData.name;
       case TYPE:
-        return props.tempData.type;
+        return props.objectData.type;
       case COLOR:
-        return props.tempData.color;
+        return props.objectData.color;
       default:
         break;
     }
@@ -60,23 +58,23 @@ const Form: React.FC<Props> = (props) => {
     switch (type) {
       case NAME:
         return (event: TypeChange) =>
-          props.setTempData({
+          props.setObjectData({
             name: event.currentTarget.value,
-            type: props.tempData.type,
-            color: props.tempData.color,
+            type: props.objectData.type,
+            color: props.objectData.color,
           });
       case TYPE:
         return (event: TypeChange) =>
-          props.setTempData({
-            name: props.tempData.name,
+          props.setObjectData({
+            name: props.objectData.name,
             type: event.currentTarget.value,
-            color: props.tempData.color,
+            color: props.objectData.color,
           });
       case COLOR:
         return (event: TypeChange) =>
-          props.setTempData({
-            name: props.tempData.name,
-            type: props.tempData.type,
+          props.setObjectData({
+            name: props.objectData.name,
+            type: props.objectData.type,
             color: event.currentTarget.value,
           });
       default:
@@ -86,9 +84,9 @@ const Form: React.FC<Props> = (props) => {
 
   const handleChangeColor = (color: { hex: string }) => {
     props.setColor({ background: color.hex });
-    props.setTempData({
-      name: props.tempData.name,
-      type: props.tempData.type,
+    props.setObjectData({
+      name: props.objectData.name,
+      type: props.objectData.type,
       color: color.hex,
     });
   };
@@ -96,40 +94,36 @@ const Form: React.FC<Props> = (props) => {
   const handleSubmit = (event: TypeSubmit) => {
     event.preventDefault();
 
-    if (props.method === FormMethod.CREATE) props.setObjectData(props.tempData);
-
+    if (props.method === FormMethod.CREATE) {
+      if (props.objectData.name) {
+        props.setTableData((prevState: TypeObjectData[]) =>
+          prevState.concat(props.objectData)
+        );
+      }
+    }
     if (props.method === FormMethod.UPDATE) {
-      const editElemIndex = props.tableData.findIndex(
-        (value) => value.name === props.mode.name
+      const editElemIndex = toFindIndex(props.mode.name, props.tableData);
+      props.setTableData((prevState) =>
+        toEditElem(editElemIndex, props.objectData, prevState)
       );
-      props.setTableData((prevState) => {
-        const currentState = [...prevState];
-        currentState.splice(editElemIndex, 1, props.tempData);
-        return currentState;
-      });
     }
 
     props.closeModal(false);
-    props.setTempData(initObjectData);
+    props.setObjectData(initObjectData);
   };
 
   const handlePicker = () => {
-    props.setIsPicker((prevState) => !prevState);
+    props.setIsPicked((prevState) => !prevState);
   };
 
   return (
     <FormWrapper onSubmit={handleSubmit} data-name="form-wrapper">
       {props.mode.type === MODE_VIEW ? (
-        <Info tableInfo={props.tableInfo} />
+        <Info objectData={props.objectData} />
       ) : (
         <>
           {formElements.map((input) => (
-            <FormField
-              key={input.id}
-              name={props.tempData.name}
-              isPicker={props.isPicker}
-              data-name="form-field"
-            >
+            <FormField key={input.id} data-name="form-field">
               <label htmlFor={input.id}>{input.label}</label>
               <FormInput
                 id={input.id}
@@ -148,8 +142,8 @@ const Form: React.FC<Props> = (props) => {
               )}
             </FormField>
           ))}
-          {props.isPicker && (
-            <FormPicker name={props.isPicker} data-name="form-picker">
+          {props.isPicked && (
+            <FormPicker data-name="form-picker">
               <SketchPicker
                 color={props.color.background}
                 onChange={handleChangeColor}
@@ -157,13 +151,15 @@ const Form: React.FC<Props> = (props) => {
               />
             </FormPicker>
           )}
-          {props.tempData.name &&
-            (props.tempData.name !==
-              toFilterName(props.tempData.name, props.tableData) ||
-            props.mode.name === props.tempData.name ? (
+          {props.objectData.name &&
+            (props.objectData.name !==
+              toFilterName(props.objectData.name, props.tableData) ||
+            props.mode.name === props.objectData.name ? (
               <Button {...FormButton}>Submit</Button>
             ) : (
-              <FormError>Name already entered!</FormError>
+              <FormError data-name="form-error">
+                Name already entered!
+              </FormError>
             ))}
         </>
       )}

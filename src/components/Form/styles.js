@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { colors } from "../../common/colors";
 
 export const FormWrapper = styled.form`
-  font-size: 1rem;
   font-weight: 500;
 `;
 
@@ -10,7 +9,6 @@ export const FormField = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   margin: 20px 0;
 `;
 
@@ -42,21 +40,17 @@ export const FormInput = styled.input`
   }
 `;
 
-export const FormButton = {
-  height: "40px",
-  margin: "0 auto",
-  padding: "0 16px",
-  boxShadow: "none",
-  backgroundColor: colors.eucalyptus,
-  backgroundColorModifier: colors.jungleGreen,
-};
-
 export const FormError = styled.div`
   height: 40px;
-  margin: 0 auto;
   padding: 0 16px;
   color: ${colors.red};
 `;
+
+export const FormButton = {
+  margin: "0 auto",
+  backgroundColor: colors.eucalyptus,
+  backgroundColorModifier: colors.jungleGreen,
+};
 
 export const iconPicker = {
   position: "relative",

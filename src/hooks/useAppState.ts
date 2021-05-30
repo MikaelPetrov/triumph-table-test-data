@@ -21,10 +21,8 @@ export const initObjectData = {
 
 export function useAppState(): TypeUseAppState {
   const [mode, setMode] = useState<TypeMode>(initMode);
-  const [tempData, setTempData] = useState<TypeObjectData>(initObjectData);
   const [objectData, setObjectData] = useState<TypeObjectData>(initObjectData);
   const [tableData, setTableData] = useState<TypeObjectData[]>([]);
-  const [tableInfo, setTableInfo] = useState<TypeObjectData[]>([]);
   const [modalVisibility, setModalVisibility] = useState(false);
 
   useEffect(() => {
@@ -37,20 +35,10 @@ export function useAppState(): TypeUseAppState {
   }, [tableData]);
 
   useEffect(() => {
-    if (objectData.name) {
-      setTableData((prevState: TypeObjectData[]) =>
-        prevState.concat(objectData)
-      );
-    }
-    setModalVisibility(false);
-  }, [objectData]);
-
-  useEffect(() => {
     switch (mode.type) {
       case MODE_VIEW:
-        return infoMode();
       case MODE_EDIT:
-        return editMode();
+        return viewEditMode();
       case MODE_DELETE:
         return deleteMode();
       default:
@@ -59,18 +47,11 @@ export function useAppState(): TypeUseAppState {
     // eslint-disable-next-line
   }, [mode]);
 
-  const infoMode = () => {
+  const viewEditMode = () => {
     setModalVisibility(true);
 
-    const viewData = tableData.filter((value) => value.name === mode.name);
-    setTableInfo(viewData);
-  };
-
-  const editMode = () => {
-    setModalVisibility(true);
-
-    const editRow = tableData.find((value) => value.name === mode.name);
-    if (editRow) setTempData(editRow);
+    const viewRow = tableData.find((value) => value.name === mode.name);
+    if (viewRow) setObjectData(viewRow);
   };
 
   const deleteMode = () => {
@@ -81,12 +62,10 @@ export function useAppState(): TypeUseAppState {
 
   return {
     mode,
-    tempData,
+    objectData,
     tableData,
-    tableInfo,
     modalVisibility,
     setMode,
-    setTempData,
     setObjectData,
     setTableData,
     setModalVisibility,
