@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react";
-
-export type TypeChange = ChangeEvent<HTMLInputElement>;
+export type TypeChange = React.ChangeEvent<HTMLInputElement>;
 export type TypeSubmit = React.FormEvent<HTMLFormElement>;
+export type TypeClick = React.MouseEvent<HTMLDivElement>;
 
 export type TypeColor = {
   background: string;
