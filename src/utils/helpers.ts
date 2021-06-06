@@ -26,7 +26,7 @@ export function toEditElem(
 export function toDragElem(result: DropResult, tableData: TypeObjectData[]) {
   const items = Array.from(tableData);
   const [reorderedItem] = items.splice(result.source.index, 1);
-  items.splice(result.destination!.index, 0, reorderedItem);
+  items.splice(result.destination!?.index, 0, reorderedItem);
   return items;
 }
 
