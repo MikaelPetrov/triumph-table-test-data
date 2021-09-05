@@ -1,4 +1,4 @@
-# triumph-test-table-data
+# triumph-table-test-data
 It's the test task from interview TRIUMPH
 
 To start the project, you need to do the following:
