@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/triumph-test-table-data/static/css/main.9634aed0.chunk.css",
-    "main.js": "/triumph-test-table-data/static/js/main.183b6367.chunk.js",
-    "main.js.map": "/triumph-test-table-data/static/js/main.183b6367.chunk.js.map",
-    "runtime-main.js": "/triumph-test-table-data/static/js/runtime-main.826e3091.js",
-    "runtime-main.js.map": "/triumph-test-table-data/static/js/runtime-main.826e3091.js.map",
-    "static/js/2.02ca9abd.chunk.js": "/triumph-test-table-data/static/js/2.02ca9abd.chunk.js",
-    "static/js/2.02ca9abd.chunk.js.map": "/triumph-test-table-data/static/js/2.02ca9abd.chunk.js.map",
-    "static/js/3.3cbbd49a.chunk.js": "/triumph-test-table-data/static/js/3.3cbbd49a.chunk.js",
-    "static/js/3.3cbbd49a.chunk.js.map": "/triumph-test-table-data/static/js/3.3cbbd49a.chunk.js.map",
-    "index.html": "/triumph-test-table-data/index.html",
-    "static/css/main.9634aed0.chunk.css.map": "/triumph-test-table-data/static/css/main.9634aed0.chunk.css.map",
-    "static/js/2.02ca9abd.chunk.js.LICENSE.txt": "/triumph-test-table-data/static/js/2.02ca9abd.chunk.js.LICENSE.txt"
+    "main.css": "/triumph-table-test-data/static/css/main.9634aed0.chunk.css",
+    "main.js": "/triumph-table-test-data/static/js/main.183b6367.chunk.js",
+    "main.js.map": "/triumph-table-test-data/static/js/main.183b6367.chunk.js.map",
+    "runtime-main.js": "/triumph-table-test-data/static/js/runtime-main.826e3091.js",
+    "runtime-main.js.map": "/triumph-table-test-data/static/js/runtime-main.826e3091.js.map",
+    "static/js/2.02ca9abd.chunk.js": "/triumph-table-test-data/static/js/2.02ca9abd.chunk.js",
+    "static/js/2.02ca9abd.chunk.js.map": "/triumph-table-test-data/static/js/2.02ca9abd.chunk.js.map",
+    "static/js/3.3cbbd49a.chunk.js": "/triumph-table-test-data/static/js/3.3cbbd49a.chunk.js",
+    "static/js/3.3cbbd49a.chunk.js.map": "/triumph-table-test-data/static/js/3.3cbbd49a.chunk.js.map",
+    "index.html": "/triumph-table-test-data/index.html",
+    "static/css/main.9634aed0.chunk.css.map": "/triumph-table-test-data/static/css/main.9634aed0.chunk.css.map",
+    "static/js/2.02ca9abd.chunk.js.LICENSE.txt": "/triumph-table-test-data/static/js/2.02ca9abd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.826e3091.js",
